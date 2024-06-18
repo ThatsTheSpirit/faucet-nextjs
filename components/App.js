@@ -1,6 +1,6 @@
 "use client";
-const { default: Header } = require("./Header");
-const { default: Main } = require("./Main");
+import Header from "@/components/Header";
+import Main from "@/components/Main";
 
 const App = () => {
     return (
