@@ -1,4 +1,61 @@
-function Main(props) {
+"use client";
+import { ethers } from "ethers";
+import { useEffect, useState } from "react";
+import { useAccount, useAccountEffect, useSwitchAccount } from "wagmi";
+import { getContractWithSigner } from "@/contract/getContractWithSigner";
+import Transaction from "@/components/Transaction";
+
+function Main() {
+    const { address } = useAccount();
+    const [receiverAddress, setReceiverAddress] = useState("");
+    const [disabled, setDisabled] = useState(false);
+    const [faucetContract, setFaucetContract] = useState();
+    // const {} = useSwitchAccount()
+
+    useEffect(() => {
+        (async () => {
+            const contract = await getContractWithSigner();
+            setFaucetContract(contract);
+        })();
+    }, [address]);
+
+    useAccountEffect({
+        onConnect(data) {
+            console.log("Connected!", data.address);
+            setDisabled(false);
+        },
+        onDisconnect() {
+            setDisabled(true);
+        },
+    });
+
+    // faucetContract?.on("Request", (e, data) => {
+    //     console.log(e, data);
+    // });
+
+    function handleAddress(e) {
+        setReceiverAddress(e.target.value);
+    }
+
+    async function handleBtnClick() {
+        if (ethers.isAddress(receiverAddress)) {
+            setDisabled(true);
+            try {
+                console.log("Ждем выполнение транзакции..");
+                const tx = await faucetContract?.getTokens();
+                console.log(tx);
+                const receipt = await tx.wait();
+                console.log("Успешно", receipt);
+            } catch (e) {
+                console.error(faucetContract.interface.parseError(e.data));
+            } finally {
+                setDisabled(false);
+            }
+        } else {
+            alert("Wrong address!");
+        }
+    }
+
     return (
         <main className="mt-[130px]">
             <div className="container w-[80%] my-0 mx-auto">
@@ -12,46 +69,32 @@ function Main(props) {
                     </p>
                     <div className="send-data mt-[46px] mx-auto mb-0 w-[60%] h-[63px] flex justify-between items-center">
                         <input
-                            className="send-data__address text-white pl-[20px] border-solid border-[4px] border-[#353c4a] rounded-[48px] shadow-sh-primary bg-[#181e29] h-[100%] w-[68%]"
+                            className="send-data__address disabled:text-gray-400 text-white px-[20px] border-solid border-[4px] border-[#353c4a] rounded-[48px] shadow-sh-primary bg-[#181e29] h-[100%] w-[68%]"
                             type="text"
                             name=""
                             id=""
                             required
                             placeholder="Type your address here..."
+                            onChange={handleAddress}
+                            value={receiverAddress}
                         />
                         <button
-                            className="border-1 border-solid border-[#144ee3] w-[178px] h-[60px] bg-[#144ee3] rounded-[48px] font-semibold text-center text-[16px] text-white cursor-pointer shadow-btn-primary"
+                            className="border-1 border-solid border-[#144ee3] w-[178px] h-[60px] bg-[#144ee3] active:bg-red-500 disabled:bg-gray-400 rounded-[48px] font-semibold text-center text-[16px] text-white cursor-pointer shadow-btn-primary"
                             type="submit"
+                            onClick={handleBtnClick}
+                            disabled={disabled}
                         >
                             Get tokens
                         </button>
                     </div>
                 </div>
                 <div className="transactions mt-[127px]">
-                    <div className="row text-center flex justify-around items-center w-full h-[63px] backdrop:blur-[56px] shadow-sh-primary bg-[#242425] first:rounded-t-lg first:bg-[#181e29] first:text-[15px] first:text-[#c9ced6] first:font-bold first:backdrop:blur-[28px]">
-                        <div className="address w-[33%] font-light text-center text-[14px] text-[#c9ced6]">
-                            To
-                        </div>
-                        <div className="date font-light text-center text-[14px] text-[#c9ced6] w-[20%]">
-                            Date
-                        </div>
-                        <div className="amount font-light text-center text-[14px] text-[#c9ced6] w-[20%]">
-                            Amount
-                        </div>
-                        <div className="status w-[10%] ">Status</div>
-                    </div>
-                    <div className="row">
-                        <div className="address"></div>
-                        <div className="date"></div>
-                        <div className="amount"></div>
-                        <div className="status"></div>
-                    </div>
-                    <div className="row">
-                        <div className="address"></div>
-                        <div className="date"></div>
-                        <div className="amount"></div>
-                        <div className="status"></div>
-                    </div>
+                    <Transaction
+                        address="To"
+                        date="Date"
+                        amount="Amount"
+                        status="Status"
+                    />
                 </div>
             </div>
         </main>
