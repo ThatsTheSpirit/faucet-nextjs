@@ -3,6 +3,7 @@ import { WagmiProvider, createConfig, http } from "wagmi";
 import { sepolia, optimism } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
+import CONFIG from "@/config/config";
 
 const appConfig = createConfig(
     getDefaultConfig({
@@ -10,20 +11,17 @@ const appConfig = createConfig(
         chains: [sepolia],
         transports: {
             // RPC URL for each chain
-            [sepolia.id]: http(
-                `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`
-            ),
+            [sepolia.id]: http(`${CONFIG.RPC_URL}${CONFIG.ALCHEMY_ID}`),
         },
 
         // Required API Keys
         walletConnectProjectId:
             process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
 
-        // Required App Info
-        appName: "Your App Name",
+        appName: "Faucety",
 
         // Optional App Info
-        appDescription: "Your App Description",
+        appDescription: "Free faucet",
         appUrl: "https://family.co", // your app's url
         appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
     })
@@ -35,7 +33,9 @@ export const Web3Provider = ({ children }) => {
     return (
         <WagmiProvider config={appConfig}>
             <QueryClientProvider client={queryClient}>
-                <ConnectKitProvider>{children}</ConnectKitProvider>
+                <ConnectKitProvider theme="midnight">
+                    {children}
+                </ConnectKitProvider>
             </QueryClientProvider>
         </WagmiProvider>
     );
