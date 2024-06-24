@@ -3,21 +3,40 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useAccount, useAccountEffect, useSwitchAccount } from "wagmi";
 import { getContractWithSigner } from "@/contract/getContractWithSigner";
+import contract from "@/contract/getContract";
 import Transaction from "@/components/Transaction";
 
 function Main() {
-    const { address } = useAccount();
+    const { address, isConnected } = useAccount();
     const [receiverAddress, setReceiverAddress] = useState("");
     const [disabled, setDisabled] = useState(false);
     const [faucetContract, setFaucetContract] = useState();
-    // const {} = useSwitchAccount()
+    const [transactions, setTransactions] = useState([]);
 
     useEffect(() => {
         (async () => {
-            const contract = await getContractWithSigner();
-            setFaucetContract(contract);
+            if (isConnected) {
+                const contract = await getContractWithSigner();
+                setFaucetContract(contract);
+            }
         })();
     }, [address]);
+
+    useEffect(() => {
+        (async () => {
+            const filter = contract?.filters.Request;
+            const logs = await contract?.queryFilter(filter);
+            const events = logs.map(({ args }) => {
+                return {
+                    address: args[0],
+                    amount: ethers.formatUnits(args[1], 18),
+                    date: new Date(Number(args[2]) * 1000).toLocaleDateString(),
+                };
+            });
+            console.log(events);
+            setTransactions(events);
+        })();
+    }, []);
 
     useAccountEffect({
         onConnect(data) {
@@ -29,10 +48,6 @@ function Main() {
         },
     });
 
-    // faucetContract?.on("Request", (e, data) => {
-    //     console.log(e, data);
-    // });
-
     function handleAddress(e) {
         setReceiverAddress(e.target.value);
     }
@@ -42,7 +57,7 @@ function Main() {
             setDisabled(true);
             try {
                 console.log("Ждем выполнение транзакции..");
-                const tx = await faucetContract?.getTokens();
+                const tx = await faucetContract?.getTokens(receiverAddress);
                 console.log(tx);
                 const receipt = await tx.wait();
                 console.log("Успешно", receipt);
@@ -95,6 +110,15 @@ function Main() {
                         amount="Amount"
                         status="Status"
                     />
+                    {transactions &&
+                        transactions.map(({ address, amount, date }, index) => (
+                            <Transaction
+                                key={index}
+                                address={address}
+                                amount={amount}
+                                date={date}
+                            />
+                        ))}
                 </div>
             </div>
         </main>
