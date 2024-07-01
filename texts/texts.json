@@ -1,0 +1,24 @@
+{
+    "en": {
+        "header": {
+            "connectBtn": "Connect"
+        },
+        "main": {
+            "title": "Get testnet tokens",
+            "desc": "Faucety is an efficient and easy-to-use testnet faucet service that allows you to claim free tokens",
+            "inputPlaceholder": "Type your address here...",
+            "button": "Get tokens"
+        }
+    },
+    "ru": {
+        "header": {
+            "connectBtn": "Подключиться"
+        },
+        "main": {
+            "title": "Получить тестовые токены",
+            "desc": "Faucety - это эффективный и легкий в использовании сервис для получения тестовых токенов",
+            "inputPlaceholder": "Введите свой адрес...",
+            "button": "Получить токены"
+        }
+    }
+}
