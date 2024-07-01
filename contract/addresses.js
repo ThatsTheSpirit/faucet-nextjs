@@ -1,5 +1,5 @@
 const chainToAddress = {
-    sepolia: "0xC1e04E1BAbb07C54E61016Ce73ba824a2CB44e97",
+    sepolia: "0x51bC97A14178c2EbC72d5818a4C39C995bf984dd",
     optimism: "",
 };
 
