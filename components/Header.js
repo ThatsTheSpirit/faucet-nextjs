@@ -1,6 +1,9 @@
+import useTexts from "@/hooks/useTexts";
 import { ConnectKitButton } from "connectkit";
 
 function Header(props) {
+    const { header } = useTexts();
+
     return (
         <header className="relative h-[60px]">
             <nav className="fixed w-full z-[2] h-[60px]">
@@ -9,10 +12,7 @@ function Header(props) {
                         <div className="header__logo font-extrabold text-[34px] text-transparent bg-clip-text bg-gradient-logo">
                             Faucety
                         </div>
-                        {/* <button className="border-1 border-solid border-[#144ee3] w-[178px] h-[60px] bg-[#144ee3] rounded-[48px] font-semibold text-center text-[16px] text-white cursor-pointer shadow-btn-primary">
-                            Connect
-                        </button> */}
-                        <ConnectKitButton>Connect</ConnectKitButton>
+                        <ConnectKitButton>{header.connectBtn}</ConnectKitButton>
                     </div>
                 </div>
             </nav>
