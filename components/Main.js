@@ -6,6 +6,7 @@ import { getContractWithSigner } from "@/contract/getContractWithSigner";
 import contract from "@/contract/getContract";
 import Transaction from "@/components/Transaction";
 import useTexts from "@/hooks/useTexts";
+import TransactionList from "./TransactionList";
 
 function Main() {
     const { address, isConnected } = useAccount();
@@ -13,7 +14,7 @@ function Main() {
     const [disabled, setDisabled] = useState(false);
     const [faucetContract, setFaucetContract] = useState();
     const [transactions, setTransactions] = useState([]);
-    const { main } = useTexts();
+    const { main, transaction } = useTexts();
 
     useEffect(() => {
         (async () => {
@@ -47,7 +48,7 @@ function Main() {
             console.log(events);
             setTransactions(events);
         })();
-    }, []);
+    }, [isConnected]);
 
     useAccountEffect({
         onConnect(data) {
@@ -115,20 +116,14 @@ function Main() {
                 </div>
                 <div className="transactions mt-[127px]">
                     <Transaction
-                        address="To"
-                        date="Date"
-                        amount="Amount"
-                        status="Status"
+                        address={transaction.address}
+                        date={transaction.date}
+                        amount={transaction.amount}
+                        status={transaction.status}
                     />
-                    {transactions &&
-                        transactions.map(({ address, amount, date }, index) => (
-                            <Transaction
-                                key={index}
-                                address={address}
-                                amount={amount}
-                                date={date}
-                            />
-                        ))}
+                    {transactions && (
+                        <TransactionList transactions={transactions} />
+                    )}
                 </div>
             </div>
         </main>
