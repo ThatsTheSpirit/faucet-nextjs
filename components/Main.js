@@ -1,10 +1,11 @@
 "use client";
 import { ethers } from "ethers";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useAccount, useAccountEffect, useSwitchAccount } from "wagmi";
 import { getContractWithSigner } from "@/contract/getContractWithSigner";
 import contract from "@/contract/getContract";
 import Transaction from "@/components/Transaction";
+import useTexts from "@/hooks/useTexts";
 
 function Main() {
     const { address, isConnected } = useAccount();
@@ -12,6 +13,7 @@ function Main() {
     const [disabled, setDisabled] = useState(false);
     const [faucetContract, setFaucetContract] = useState();
     const [transactions, setTransactions] = useState([]);
+    const { main } = useTexts();
 
     useEffect(() => {
         (async () => {
@@ -21,6 +23,15 @@ function Main() {
             }
         })();
     }, [address]);
+
+    faucetContract?.on("Request", (address, amount, date) => {
+        const tx = {
+            address,
+            amount: ethers.formatUnits(amount, 18),
+            date: new Date(Number(date) * 1000).toLocaleDateString(),
+        };
+        setTransactions([...transactions, tx]);
+    });
 
     useEffect(() => {
         (async () => {
@@ -62,7 +73,7 @@ function Main() {
                 const receipt = await tx.wait();
                 console.log("Успешно", receipt);
             } catch (e) {
-                console.error(faucetContract.interface.parseError(e.data));
+                console.error(faucetContract.interface.parseError(e.data).name);
             } finally {
                 setDisabled(false);
             }
@@ -76,11 +87,10 @@ function Main() {
             <div className="container w-[80%] my-0 mx-auto">
                 <div className="upper my-0 mx-auto w-[66%]">
                     <h1 className="upper__title text-[60px] text-center my-0 mx-auto leading-[133%] font-extrabold text-transparent bg-clip-text bg-gradient-logo">
-                        Get testnet tokens :&#41;
+                        {main.title} :&#41;
                     </h1>
                     <p className="upper__desc mt-[20px] mx-auto mb-0 w-[57.5%] font-light text-[16px] text-center leading-[147%] text-[#c9ced6]">
-                        Faucety is an efficient and easy-to-use testnet faucet
-                        service that allows you to claim free tokens.
+                        {main.desc}
                     </p>
                     <div className="send-data mt-[46px] mx-auto mb-0 w-[60%] h-[63px] flex justify-between items-center">
                         <input
@@ -89,7 +99,7 @@ function Main() {
                             name=""
                             id=""
                             required
-                            placeholder="Type your address here..."
+                            placeholder={main.inputPlaceholder}
                             onChange={handleAddress}
                             value={receiverAddress}
                         />
@@ -99,7 +109,7 @@ function Main() {
                             onClick={handleBtnClick}
                             disabled={disabled}
                         >
-                            Get tokens
+                            {main.button}
                         </button>
                     </div>
                 </div>
