@@ -25,11 +25,12 @@ function Main() {
         })();
     }, [address]);
 
-    faucetContract?.on("Request", (address, amount, date) => {
+    faucetContract?.on("Request", (address, amount, date, event) => {
         const tx = {
             address,
             amount: ethers.formatUnits(amount, 18),
             date: new Date(Number(date) * 1000).toLocaleDateString(),
+            txhash: event.transactionHash,
         };
         setTransactions([...transactions, tx]);
     });
@@ -38,11 +39,13 @@ function Main() {
         (async () => {
             const filter = contract?.filters.Request;
             const logs = await contract?.queryFilter(filter);
-            const events = logs.map(({ args }) => {
+            //console.log(logs);
+            const events = logs.map(({ args, transactionHash }) => {
                 return {
                     address: args[0],
                     amount: ethers.formatUnits(args[1], 18),
                     date: new Date(Number(args[2]) * 1000).toLocaleDateString(),
+                    txhash: transactionHash,
                 };
             });
             console.log(events);
@@ -119,7 +122,7 @@ function Main() {
                         address={transaction.address}
                         date={transaction.date}
                         amount={transaction.amount}
-                        status={transaction.status}
+                        txhash={transaction.txhashHeader}
                     />
                     {transactions && (
                         <TransactionList transactions={transactions} />
