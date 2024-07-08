@@ -1,15 +1,12 @@
-import { Contract, BrowserProvider } from "ethers";
+import { Contract } from "ethers";
 import CONFIG from "@/config/config";
 import chainToAddress from "./addresses";
 import abi from "./abi";
+import browserProvider from "./providers/browserProvider";
 
-export async function getContractWithSigner() {
-    if (
-        typeof window !== "undefined" &&
-        typeof window.ethereum !== "undefined"
-    ) {
-        const provider = new BrowserProvider(window.ethereum);
-        const signer = await provider?.getSigner();
-        return new Contract(chainToAddress[CONFIG.NETWORK], abi, signer);
-    }
+async function getContractWithSigner() {
+    const signer = await browserProvider?.getSigner();
+    return new Contract(chainToAddress[CONFIG.NETWORK], abi, signer);
 }
+
+export default getContractWithSigner;
