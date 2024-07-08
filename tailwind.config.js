@@ -10,6 +10,7 @@ module.exports = {
             boxShadow: {
                 "btn-primary": "10px 9px 22px 0 rgba(20, 78, 227, 0.38)",
                 "sh-primary": "0 4px 10px 0 rgba(0, 0, 0, 0.1)",
+                "lang-selector": "inset 0 0 0 1px rgba(255,255,255,0.05)",
             },
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
