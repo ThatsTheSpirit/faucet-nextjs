@@ -1,5 +1,6 @@
 import useTexts from "@/hooks/useTexts";
 import { ConnectKitButton } from "connectkit";
+import LangSelector from "./LangSelector";
 
 function Header(props) {
     const { header } = useTexts();
@@ -12,7 +13,12 @@ function Header(props) {
                         <div className="header__logo font-extrabold text-[34px] text-transparent bg-clip-text bg-gradient-logo">
                             Faucety
                         </div>
-                        <ConnectKitButton>{header.connectBtn}</ConnectKitButton>
+                        <div className="flex justify-between">
+                            <ConnectKitButton className="pt-50">
+                                {header.connectBtn}
+                            </ConnectKitButton>
+                            <LangSelector className="ml-[15px]" />
+                        </div>
                     </div>
                 </div>
             </nav>
