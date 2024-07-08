@@ -2,7 +2,7 @@
 import { ethers } from "ethers";
 import { useEffect, useState, useMemo } from "react";
 import { useAccount, useAccountEffect, useSwitchAccount } from "wagmi";
-import { getContractWithSigner } from "@/contract/getContractWithSigner";
+import getContractWithSigner from "@/contract/getContractWithSigner";
 import contract from "@/contract/getContract";
 import Transaction from "@/components/Transaction";
 import useTexts from "@/hooks/useTexts";
