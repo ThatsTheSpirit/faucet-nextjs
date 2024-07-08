@@ -13,7 +13,8 @@
             "address": "To",
             "date": "Date",
             "amount": "Amount",
-            "status": "Status"
+            "txhashHeader": "Tx",
+            "tx": "Click"
         }
     },
     "ru": {
@@ -30,7 +31,8 @@
             "address": "Получатель",
             "date": "Дата",
             "amount": "Кол-во",
-            "status": "Статус"
+            "txhashHeader": "Транзакция",
+            "tx": "Перейти"
         }
     }
 }
