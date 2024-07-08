@@ -1,5 +1,6 @@
 {
     "en": {
+        "selector": "English",
         "header": {
             "connectBtn": "Connect"
         },
@@ -17,7 +18,27 @@
             "tx": "Click"
         }
     },
+    "fr": {
+        "selector": "French",
+        "header": {
+            "connectBtn": "Se Connecter"
+        },
+        "main": {
+            "title": "Obtenir des jetons de réseau de test",
+            "desc": "Faucet est un service de testnet faucet efficace et facile à utiliser qui vous permet de réclamer des jetons gratuits",
+            "inputPlaceholder": "Tapez votre adresse ici...",
+            "button": "Obtenez des jetons"
+        },
+        "transaction": {
+            "address": "Récepteur",
+            "date": "Date",
+            "amount": "Montant",
+            "txhashHeader": "Opération",
+            "tx": "Cliquez"
+        }
+    },
     "ru": {
+        "selector": "Russian",
         "header": {
             "connectBtn": "Подключиться"
         },
@@ -32,6 +53,25 @@
             "date": "Дата",
             "amount": "Кол-во",
             "txhashHeader": "Транзакция",
+            "tx": "Перейти"
+        }
+    },
+    "ua": {
+        "selector": "Ukranian",
+        "header": {
+            "connectBtn": "Підключатися"
+        },
+        "main": {
+            "title": "Отримати тестові токени",
+            "desc": "Faucety - це ефективний і легкий у використанні сервіс для отримання тестових токенів",
+            "inputPlaceholder": "Введіть свою адресу...",
+            "button": "Отримати токени"
+        },
+        "transaction": {
+            "address": "Одержувач",
+            "date": "Дата",
+            "amount": "Кількість",
+            "txhashHeader": "Транзакція",
             "tx": "Перейти"
         }
     }

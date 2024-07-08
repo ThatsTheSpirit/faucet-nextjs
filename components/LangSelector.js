@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { Context } from "./Provider";
+import texts from "@/texts/texts.json";
 
-function LangSelector({ children }) {
+function LangSelector() {
     const { lang, setLang } = useContext(Context);
 
     function selectHandler(e) {
@@ -11,13 +12,14 @@ function LangSelector({ children }) {
 
     return (
         <select
-            className="p-1 rounded-md bg-[#313235] hover:bg-[#414144] shadow-lang-selector active:bg-[#4c4d4f] text-white text-[17px]"
+            className="ml-[15px] p-1 rounded-md bg-[#313235] hover:bg-[#414144] shadow-lang-selector active:bg-[#4c4d4f] text-white text-[17px]"
             onChange={selectHandler}
             defaultValue="Language"
         >
             <option disabled>Language</option>
-            <option value="en">English</option>
-            <option value="ru">Russian</option>
+            {Object.entries(texts).map((entry) => (
+                <option value={entry[0]}>{entry[1].selector}</option>
+            ))}
         </select>
     );
 }

@@ -22,7 +22,7 @@ const appConfig = createConfig(
 
         // Optional App Info
         appDescription: "Free faucet",
-        appUrl: "https://family.co", // your app's url
+        appUrl: "faucet-nextjs-bice.vercel.app", // your app's url
         appIcon: "https://family.co/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
     })
 );

@@ -14,10 +14,10 @@ function Header(props) {
                             Faucety
                         </div>
                         <div className="flex justify-between">
-                            <ConnectKitButton className="pt-50">
+                            <ConnectKitButton>
                                 {header.connectBtn}
                             </ConnectKitButton>
-                            <LangSelector className="ml-[15px]" />
+                            <LangSelector />
                         </div>
                     </div>
                 </div>
