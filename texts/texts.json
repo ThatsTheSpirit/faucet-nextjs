@@ -1,5 +1,5 @@
 {
-    "en": {
+    "us": {
         "selector": "English",
         "header": {
             "connectBtn": "Connect"
@@ -73,6 +73,44 @@
             "amount": "Кількість",
             "txhashHeader": "Транзакція",
             "tx": "Перейти"
+        }
+    },
+    "de": {
+        "selector": "German",
+        "header": {
+            "connectBtn": "Verbinden"
+        },
+        "main": {
+            "title": "Holen Sie sich Testnet-Token",
+            "desc": "Faucety ist ein effizienter und benutzerfreundlicher Testnet-Wasserhahn-Service, mit dem Sie kostenlose Token anfordern können",
+            "inputPlaceholder": "Geben Sie hier Ihre Adresse ein...",
+            "button": "Token erhalten"
+        },
+        "transaction": {
+            "address": "Empfänger",
+            "date": "Datum",
+            "amount": "Menge",
+            "txhashHeader": "Transaktion",
+            "tx": "Klicken"
+        }
+    },
+    "pl": {
+        "selector": "Polish",
+        "header": {
+            "connectBtn": "Połącz Portfel"
+        },
+        "main": {
+            "title": "Zdobądź tokeny testnet",
+            "desc": "Faucety to wydajna i łatwa w użyciu usługa testnet faucet, która umożliwia odbieranie bezpłatnych tokenów",
+            "inputPlaceholder": "Wpisz tutaj swój adres...",
+            "button": "Zdobądź tokeny"
+        },
+        "transaction": {
+            "address": "Odbiornik",
+            "date": "Data",
+            "amount": "Kwota",
+            "txhashHeader": "Transakcja",
+            "tx": "Kliknij"
         }
     }
 }
