@@ -7,7 +7,7 @@ function useTexts() {
     if (!texts[lang]) {
         console.error(`Language '${lang}' not found in texts`);
         localStorage.clear();
-        return { lang: "en" };
+        return { lang: "us" };
     }
     return texts[lang];
 }

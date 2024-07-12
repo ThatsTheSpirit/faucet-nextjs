@@ -1,26 +1,42 @@
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useRef } from "react";
 import { Context } from "./Provider";
 import texts from "@/texts/texts.json";
+import { Select, Avatar, SelectItem } from "@nextui-org/react";
 
 function LangSelector() {
     const { lang, setLang } = useContext(Context);
 
     function selectHandler(e) {
-        setLang(e.target.value);
+        const selectedLang = e.target.value;
+        setLang(selectedLang);
         localStorage.setItem("lang", e.target.value);
     }
 
     return (
-        <select
-            className="ml-[15px] p-1 rounded-md bg-[#313235] hover:bg-[#414144] shadow-lang-selector active:bg-[#4c4d4f] text-white text-[17px]"
+        <Select
+            className="w-[160px] ml-[15px] text-[17px] dark"
             onChange={selectHandler}
-            defaultValue="Language"
+            size="40px"
+            color="default"
+            labelPlacement="inside"
+            placeholder="Select lang"
         >
-            <option disabled>Language</option>
-            {Object.entries(texts).map((entry) => (
-                <option value={entry[0]}>{entry[1].selector}</option>
+            {Object.entries(texts).map(([langvalue, langTitle]) => (
+                <SelectItem
+                    key={langvalue}
+                    value={langvalue}
+                    startContent={
+                        <Avatar
+                            alt={langTitle.selector}
+                            className="w-7 h-6"
+                            src={`https://flagcdn.com/${langvalue}.svg`}
+                        />
+                    }
+                >
+                    {langTitle.selector}
+                </SelectItem>
             ))}
-        </select>
+        </Select>
     );
 }
 
