@@ -33,7 +33,10 @@ export const Web3Provider = ({ children }) => {
     return (
         <WagmiProvider config={appConfig}>
             <QueryClientProvider client={queryClient}>
-                <ConnectKitProvider theme="midnight">
+                <ConnectKitProvider
+                    theme="midnight"
+                    options={{ language: "en-US" }}
+                >
                     {children}
                 </ConnectKitProvider>
             </QueryClientProvider>
