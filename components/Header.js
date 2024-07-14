@@ -1,10 +1,7 @@
-import useTexts from "@/hooks/useTexts";
 import { ConnectKitButton } from "connectkit";
 import LangSelector from "./LangSelector";
 
 function Header(props) {
-    const { header } = useTexts();
-
     return (
         <header className="relative h-[60px]">
             <nav className="fixed w-full z-[2] h-[60px]">
@@ -14,9 +11,7 @@ function Header(props) {
                             Faucety
                         </div>
                         <div className="flex justify-between">
-                            <ConnectKitButton>
-                                {header.connectBtn}
-                            </ConnectKitButton>
+                            <ConnectKitButton />
                             <LangSelector />
                         </div>
                     </div>
